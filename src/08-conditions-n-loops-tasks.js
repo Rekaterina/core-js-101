@@ -395,8 +395,20 @@ function toNaryString(num, n) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/webalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  let str = '';
+  const pathArr = pathes[0].split('/');
+  let i = 0;
+  while (i < pathArr.length) {
+    const path = pathArr[i];
+    for (let j = 0; j < pathes.length; j += 1) {
+      const arr = pathes[j].split('/');
+      if (arr[i] !== path) return str;
+    }
+    str += `${path}/`;
+    i += 1;
+  }
+  return str;
 }
 
 
@@ -418,8 +430,19 @@ function getCommonDirectoryPath(/* pathes */) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  const matrix = new Array(m1.length);
+  for (let i = 0; i < matrix.length; i += 1) {
+    matrix[i] = new Array(m2[0].length).fill(0);
+  }
+  for (let j = 0; j < m2[0].length; j += 1) {
+    m1.forEach((item, index) => {
+      item.forEach((item2, index2) => {
+        matrix[index][j] += item2 * m2[index2][j];
+      });
+    });
+  }
+  return matrix;
 }
 
 
@@ -453,8 +476,30 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(position) {
+  for (let i = 0; i < 3; i += 1) {
+    if (position[i][0] === position[i][1]
+       && position[i][0] === position[i][2]
+        && position[i][0] !== undefined) {
+      return position[i][0];
+    }
+    if (position[0][i] === position[1][i]
+       && position[0][i] === position[2][i]
+        && position[0][i] !== undefined) {
+      return position[0][i];
+    }
+  }
+  if (position[0][0] === position[1][1]
+     && position[0][0] === position[2][2]
+      && position[0][0] !== undefined) {
+    return position[0][0];
+  }
+  if (position[2][0] === position[1][1]
+     && position[2][0] === position[0][2]
+      && position[2][0] !== undefined) {
+    return position[2][0];
+  }
+  return undefined;
 }
 
 
